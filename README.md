@@ -5,10 +5,10 @@
 A small collection of GPU shaders for [Ghostty](https://ghostty.org): VHS rot, signal loss, channel-split static, and three flavors of CRT phosphor glow — green, amber, paper-white. Stack them or run them solo. The glitch layer never touches the row you're typing on.
 
 ```
-┌─────────────────────────────────────────────────┐
-│ ▓▒░ chrome flakes off the bones of the grid ░▒▓ │
+┌──────────────────────────────────────────────────┐
+│ ▓▒░ chrome flakes off the bones of the grid  ░▒▓ │
 │ ▓▒░       and the buffer remembers           ░▒▓ │
-└─────────────────────────────────────────────────┘
+└──────────────────────────────────────────────────┘
 ```
 
 ---
