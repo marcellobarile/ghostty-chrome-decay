@@ -46,7 +46,7 @@ It runs only during bursts, not every frame, so the idle terminal looks calm. Wh
 
 Three variants, same shape, retuned palette per phosphor:
 
-- **`crt-phosphor.glsl`** — P1 green, the classic Apple ][ / VT100 / oscilloscope look.
+- **`crt-phosphor.glsl`** — P1 green, the classic Apple / VT100 / oscilloscope look.
 - **`crt-phosphor-amber.glsl`** — P3-style amber, lower eye strain, '80s mainframe vibes.
 - **`crt-phosphor-paper.glsl`** — cold blue-white, late-CRT "paper-white" monitors.
 
