@@ -127,7 +127,7 @@ custom-shader = /Users/marcellobarile/src/ghostty-chrome-decay/shaders/chrome-de
 
 ### 4. Reload
 
-`Cmd+Shift+,` reloads the config. If nothing changes, fully quit Ghostty (`Cmd+Q`) and reopen — shader caches can be sticky.
+`Cmd+Shift+,` or `ctrl+shift+,`  reloads the config. If nothing changes, fully quit Ghostty (`Cmd+Q`) and reopen — shader caches can be sticky.
 
 ---
 
