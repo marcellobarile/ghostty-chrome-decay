@@ -11,6 +11,8 @@ A small collection of GPU shaders for [Ghostty](https://ghostty.org): VHS rot, s
 └──────────────────────────────────────────────────┘
 ```
 
+![Amber CRT + chrome-decay demo](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzhrbDA1M2s3cHdmaXZsdnlwYjh3d2IyejlpZnp5YWtob3o4ZnhibiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xCPiptQ2CPc8q5nDu2/giphy.gif)
+
 ---
 
 ## What's in the box
