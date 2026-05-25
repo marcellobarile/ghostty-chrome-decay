@@ -119,10 +119,11 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     float scan = sin((uv.y + scanJitter * 0.001) * iResolution.y * 3.14159) * 0.5 + 0.5;
     color *= 1.0 - SCANLINE_STRENGTH * (1.0 - scan) * zoneMask;
 
-    // Amber tint (luminance-preserving mix), scaled by zone so protected area stays untinted
+    // Amber tint (luminance-preserving mix), gated by burst so the steady image
+    // keeps the active theme's colors — tint only flashes in during a glitch.
     float lum = dot(color, vec3(0.299, 0.587, 0.114));
     vec3 tinted = TINT * lum;
-    color = mix(color, tinted, TINT_MIX * zoneMask);
+    color = mix(color, tinted, TINT_MIX * zoneMask * burst);
 
     // Noise grain — only during burst
     float n = hash2(fragCoord.xy + t * 60.0) - 0.5;

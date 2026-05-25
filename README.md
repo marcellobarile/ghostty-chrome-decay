@@ -233,6 +233,60 @@ Ghostty supports stacking shaders — each line adds another pass. Glitch belong
 
 ---
 
+## Auto-theme: day/night phosphor switching
+
+`scripts/auto-theme.sh` reads the current hour and points a symlink (`shaders/crt-phosphor-active.glsl`) at either the light or dark phosphor shader. Wire your Ghostty config to that symlink once — the script swaps what it points to.
+
+### Default mapping
+
+| Time window | Shader | Look |
+|-------------|--------|------|
+| 07:00 – 18:59 | `crt-phosphor-paper.glsl` | Cold paper-white (light) |
+| 19:00 – 06:59 | `crt-phosphor-amber.glsl` | Amber phosphor (dark) |
+
+### Customize
+
+Open `scripts/auto-theme.sh` and edit the four lines under `CONFIGURATION`:
+
+```sh
+LIGHT_SHADER="crt-phosphor-paper.glsl"  # any shader in shaders/
+DARK_SHADER="crt-phosphor-amber.glsl"   # any shader in shaders/
+LIGHT_START=7                            # hour (0-23) light mode begins
+DARK_START=19                            # hour (0-23) dark mode begins
+```
+
+You can point `LIGHT_SHADER` or `DARK_SHADER` at any shader in the `shaders/` directory, including `crt-phosphor.glsl` (green) or a custom variant.
+
+### Wire Ghostty to the symlink
+
+Add this to `~/.config/ghostty/config` instead of a static shader path:
+
+```
+custom-shader = /path/to/ghostty-chrome-decay/shaders/crt-phosphor-active.glsl
+custom-shader = /path/to/ghostty-chrome-decay/shaders/chrome-decay.glsl
+custom-shader-animation = true
+```
+
+Run the script once to create the symlink before launching Ghostty:
+
+```sh
+./scripts/auto-theme.sh
+```
+
+### Schedule with cron
+
+```sh
+# Install: runs auto-theme.sh at the top of every hour
+./scripts/cron-setup.sh install
+
+# Remove
+./scripts/cron-setup.sh uninstall
+```
+
+The cron job fires hourly (`0 * * * *`). After it swaps the symlink, reload Ghostty with `Cmd+Shift+,` (or quit and reopen) to pick up the new shader. If you want the switch to be seamless and immediate, set up a login item or `launchd` agent calling `auto-theme.sh` on each login/wake instead.
+
+---
+
 ## License
 
 MIT. Fork it, mutate it, tune it past sanity, ship it under another alias. The chrome decays either way.
