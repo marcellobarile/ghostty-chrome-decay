@@ -58,4 +58,12 @@ else
     echo "auto-theme: theme unchanged ($theme)"
 fi
 
-echo "auto-theme: reload Ghostty to apply (super+shift+, or restart)"
+# ── reload Ghostty ────────────────────────────────────────────────────
+# Ghostty reloads its config (theme + custom-shader) on SIGUSR2. killall
+# matches the process basename on both macOS (BSD) and Linux (procps), so it
+# hits the app without touching MCP/helper procs that carry "ghostty" in a path.
+if killall -USR2 ghostty 2>/dev/null; then
+    echo "auto-theme: sent SIGUSR2 to Ghostty (config reloaded)"
+else
+    echo "auto-theme: Ghostty not running; will apply on next launch"
+fi
