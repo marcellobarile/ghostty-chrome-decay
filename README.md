@@ -23,8 +23,9 @@ A small collection of GPU shaders for [Ghostty](https://ghostty.org): VHS rot, s
 | `shaders/crt-phosphor.glsl`       | P1 green phosphor CRT. Scanlines, bloom, curvature, ghost trail, flicker.  |
 | `shaders/crt-phosphor-amber.glsl` | Same CRT, retuned for amber phosphor (P3-style monitors).                  |
 | `shaders/crt-phosphor-paper.glsl` | Same CRT, cold paper-white phosphor for the "office terminal" look.        |
+| `shaders/crt-phosphor-paper-negative.glsl` | Inverted paper: bright ivory background, dark text, warm CRT effects. |
 
-All four share the same shape: `mainImage(out fragColor, in fragCoord)`, ShaderToy-style, sampling `iChannel0` (the terminal framebuffer).
+All five share the same shape: `mainImage(out fragColor, in fragCoord)`, ShaderToy-style, sampling `iChannel0` (the terminal framebuffer).
 
 ---
 
@@ -49,6 +50,7 @@ Three variants, same shape, retuned palette per phosphor:
 - **`crt-phosphor.glsl`** — P1 green, the classic Apple / VT100 / oscilloscope look.
 - **`crt-phosphor-amber.glsl`** — P3-style amber, lower eye strain, '80s mainframe vibes.
 - **`crt-phosphor-paper.glsl`** — cold blue-white, late-CRT "paper-white" monitors.
+- **`crt-phosphor-paper-negative.glsl`** — inverted paper: warm ivory background, dark text. Like reading a printed page through a CRT lens.
 
 Each one adds: barrel curvature, scanlines, bloom/glow, phosphor persistence (ghost trail), flicker, vignette, chromatic noise. All knobs live in a `TUNING` block at the top of the file.
 
@@ -113,6 +115,14 @@ custom-shader-animation = true
 
 ```
 custom-shader = shaders/crt-phosphor-paper.glsl
+custom-shader = shaders/chrome-decay.glsl
+custom-shader-animation = true
+```
+
+**Paper-negative CRT + glitch (bright background, dark text):**
+
+```
+custom-shader = shaders/crt-phosphor-paper-negative.glsl
 custom-shader = shaders/chrome-decay.glsl
 custom-shader-animation = true
 ```
@@ -246,16 +256,21 @@ Ghostty supports stacking shaders — each line adds another pass. Glitch belong
 
 ### Customize
 
-Open `scripts/auto-theme.sh` and edit the four lines under `CONFIGURATION`:
+Don't edit `auto-theme.sh` directly. Instead, create `scripts/auto-theme.conf.local` (gitignored — your personal overrides):
 
 ```sh
-LIGHT_SHADER="crt-phosphor-paper.glsl"  # any shader in shaders/
-DARK_SHADER="crt-phosphor-amber.glsl"   # any shader in shaders/
-LIGHT_START=7                            # hour (0-23) light mode begins
-DARK_START=19                            # hour (0-23) dark mode begins
+# scripts/auto-theme.conf.local
+LIGHT_SHADER="crt-phosphor-paper-negative.glsl"  # any shader in shaders/
+DARK_SHADER="crt-phosphor-amber.glsl"
+LIGHT_THEME="phosphor-paper"
+DARK_THEME="phosphor-amber"
+LIGHT_START=7
+DARK_START=19
 ```
 
-You can point `LIGHT_SHADER` or `DARK_SHADER` at any shader in the `shaders/` directory, including `crt-phosphor.glsl` (green) or a custom variant.
+The script loads `auto-theme.conf` (committed defaults) first, then `auto-theme.conf.local` on top — the local file wins. If you want to change the defaults for everyone using this repo, edit `scripts/auto-theme.conf` instead.
+
+You can point `LIGHT_SHADER` or `DARK_SHADER` at any shader in the `shaders/` directory.
 
 ### Wire Ghostty to the symlink
 

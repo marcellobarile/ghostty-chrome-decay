@@ -3,16 +3,21 @@
 # Run manually or let cron-setup.sh schedule it hourly.
 
 # ─── CONFIGURATION ───────────────────────────────────────────────────
-LIGHT_SHADER="crt-phosphor-paper.glsl"  # shader used during day (light)
-DARK_SHADER="crt-phosphor-amber.glsl"   # shader used at night (dark)
-LIGHT_THEME="phosphor-paper"             # Ghostty theme used during day
-DARK_THEME="phosphor-amber"              # Ghostty theme used at night
-LIGHT_START=7                            # hour (0-23) when light mode begins
-DARK_START=19                            # hour (0-23) when dark mode begins
+# Defaults — override via scripts/auto-theme.conf.local (gitignored) or
+# scripts/auto-theme.conf (committed defaults). .local takes precedence.
+LIGHT_SHADER="crt-phosphor-paper.glsl"
+DARK_SHADER="crt-phosphor-amber.glsl"
+LIGHT_THEME="phosphor-paper"
+DARK_THEME="phosphor-amber"
+LIGHT_START=7
+DARK_START=19
 GHOSTTY_CONFIG="${GHOSTTY_CONFIG:-$HOME/.config/ghostty/config}"
+
 # ─────────────────────────────────────────────────────────────────────
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+[[ -f "$SCRIPT_DIR/auto-theme.conf" ]]       && source "$SCRIPT_DIR/auto-theme.conf"
+[[ -f "$SCRIPT_DIR/auto-theme.conf.local" ]] && source "$SCRIPT_DIR/auto-theme.conf.local"
 SHADER_DIR="$SCRIPT_DIR/../shaders"
 LINK="$SHADER_DIR/crt-phosphor-active.glsl"
 

@@ -4,3 +4,4 @@
 .idea/
 .vscode/
 shaders/crt-phosphor-active.glsl
+scripts/auto-theme.conf.local
